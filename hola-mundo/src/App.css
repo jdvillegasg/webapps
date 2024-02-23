@@ -1,0 +1,61 @@
+.tw-follow-card {
+    display: flex;
+    color: #fff;
+    align-items: center;
+    font-size:0.8rem; /* sets the fonts of its children to 0.8 relative to the root element */
+    gap: 0.8em; /* sets the gaps of its children to 0.8 relative to this container*/
+    justify-content: space-between; /*browser distributes space between and around content items along the main-axis of a flex container, and the inline axis of a grid container.*/
+}
+
+.tw-follow-card-header{
+    display: flex;
+    align-items: center;
+    gap: 0.8em; /* sets the gaps between rows and columns of its childrens. In this case the columns*/
+}
+
+.tw-follow-card-container {
+    display: flex;
+    flex-direction: column; /* sets how flex items are placed in the flex container defining the main axis and the direction*/
+}
+
+.tw-follow-card-info {
+    opacity: 0.6; /* sets a darker tone for the color of the span text*/
+}
+
+.tw-follow-card-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 1000px; /* rounds the corners of an element's outer border edge*/
+}
+
+.tw-follow-card-button {
+    margin-left: 10px;
+    border-radius: 999px;
+    border: 0;
+    padding: 6px 16px ;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.tw-follow-card-button-2 {
+    margin-left: 10px;
+    border-radius: 999px;
+    border: 0;
+    padding: 6px 16px ;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+.tw-follow-card-button:hover{
+    color: rgba(131, 31, 31, 0.712);
+    font-weight: bold;
+    background-color: rgb(255, 97, 97);
+    transition: background-color 0.25s;
+    border: 1px solid rgb(255, 63, 63);
+}
+
+.tw-follow-card-button-2:hover{
+    background-color: rgb(255, 222, 162);
+    transition: background-color 0.25s;
+}
