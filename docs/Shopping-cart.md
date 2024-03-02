@@ -8,4 +8,4 @@
 * Items can be removed from cart
 * Quantity of an item can be changed
 * Stock of items will be updated accordingly to cart information.
-* Save the cart information between page refreshings.
+* Save the cart information between page refreshings in a localStorage.

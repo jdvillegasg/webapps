@@ -58,9 +58,15 @@ markdown_extensions:
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.tasklist:
       custom_checkbox: true
+  - md_in_html
 extra_css:
   - stylesheets/extra.css
 
 extra:
   annotate:
     json: [.s2]
+
+plugins:
+  - search
+  - mkdocstrings
+  - glightbox

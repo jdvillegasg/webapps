@@ -1,0 +1,16 @@
+.filters {
+    display: flex;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+    justify-content: space-between;
+    font-size: 20px;
+    font-family: system-ui;
+    font-weight: 700;
+}
+
+.filters div {
+    display: flex;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1em;
+    justify-content: space-between;
+}
