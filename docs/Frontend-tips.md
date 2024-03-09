@@ -104,12 +104,30 @@ Continuing with the previous example, the `aspect-ratio` was able to make the el
 
  [^6]: [Backdrop filter property](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter)
 
+`transition: all 0.5s ease`
+
+The entered values correspond to the `property name`, the `duration` and the `easing function`.
+
+`z-index: 1`
+
+Elements with larger `z-index` will cover those with a lower one.
+
+`scale: 0.7`
+
+Transform an element (typically an image) by scaling it (or shrinking it). If two arguments are provided, it specifies the resizing of the element in each axis.
+
+`.cart ~ .cart-button`
+
+The sub-sequent sibling selector, selects all elements that are siblings (belong to the same parent element) of the first element (`.cart` in the title).
+
 # HTML
 
 ## Good practices
 * Encapsulate a `form` element (with its `input` and `button`) within a `header` element, when it works like a search bar, where the results are shown later in the `main` section.
 
 * Always that you use an `input` and a `button` elements, enclosed them in a `form` element.
+
+* Check if the context read by the `useContext` hook is undefined, and if so, throw an error.
 
 ## Tags
 
@@ -121,7 +139,7 @@ When `button` is used with `form`, it should be of type `type="submit"`
 
  > "The `svg` is a container that defines a new coordinate system and viewport. It is used as the outermost element of SVG documents, but it can also be used to embed an SVG fragment inside an SVG or HTML document".[^3]
 
-!!! example "svg tag"
+!!! abstract "svg tag"
 
     ``` jsx
     <svg xmlns="http://www.w3.org/2000/svg">
@@ -232,9 +250,144 @@ Is like an `useMemo` but for defining a function. Internally it makes use of `us
     useCallback()
     ```
 
-`!#jsx useId()`
+`#!jsx useId()`
 
 Will create an unique ID based on the order in which the components are called.
+
+`#!jsx useContext()`
+
+In the figure below, the React components `Footer` and `Filters` require states and functions from a custom hook. If children components of require the same states and functions, we will have to keep passing them through the props of each child component. This is known as prop drilling. 
+
+The `useContext()` hook avoids this situation
+
+<figure markdown="span">
+  ![Image title](assets/use-of-context.png){ width="600" }
+  <figcaption>illustration of useContext in the shopping cart tutorial developed by midudev</figcaption>
+</figure>
+
+Figure retrieved from [^7].
+
+Below is shown an example of usage of `useContext()`. 
+
+!!! example "useContext() usage example part 1"
+    ```jsx
+    import { createContext } from 'react'
+    // Creates the context to be consumed
+    export function NameOfContext = createContext()
+    // Creates the Provider giving access to shared data
+    export function MyComponent ({children}){
+        <NameOfContext.Provider value={{dataToShare}}>
+        {children}
+        </NameOfContext.Provider>
+    }
+    ```
+
+The two previous steps have to be completed by, what is known as *consuming the context*:
+
+!!! example "useContext() usage example part 2""
+    ```jsx
+    import { NameOfContext } from 'path/to/context'
+    // This will access the data shared by the context
+    const accessSharedData = useContext(NameOfContext)
+    ```
+
+Also, the component should encapsulate all the components or elements that require to access the shared data.
+
+!!! example "useContext() usage example part 3""
+    ```jsx
+    import { MyComponent } from 'path/to/component'
+    // This will access the shared data by the context
+    <MyComponent>
+        {//Everything that is encapsulated here will have access to the data shared by the context}
+    </MyComponent>
+    ```
+It is either convenient (or required - *to be checked* -) to create a custom hook to use the context. If that is the case, the custom hook must be called from within the context provider component (any component encapsulated by it).
+
+Use cases:
+If used to share a global state, `useContext()` is thought to be used when the states are small or are not called too often (i.e. user session).
+
+[^7]: [Tienda y Carrito con React + Estado Global con useContext + Manejo de estado con useReducer](https://www.youtube.com/watch?v=B9tDYAZZxcE&t=2628s)
+
+`#!jsx useReducer()`
+
+Receives an initial state and a callback to perform on different types of actions. As in the ``useState()`` method, the state can be anything. The action can be an object whose elements are the action name (or an action identifier, i.e. a string identifying the action to perform) and the action payload (or the information, in the form of an object, array, ..., to be used for each action identifier).
+
+It is defined as follows:
+
+!!! example "useReducer() usage"
+    ```jsx
+    const [state, dispatch] = useReducer(reducer, initialState)
+
+    const addToCart = (product) =>{
+        dispatch({
+            type: 'ADD_TO_CART'  // Action identifier
+            payload: product
+        })
+    }
+    ```
+
+
+The following two code snippets show a comparisson between three functionalities of a Shopping Cart application, with and without the reducer.
+
+??? example "Example functionalities without the useReducer()"
+    ```jsx
+    const addToCart = (product) => {
+        const productInCart = cart.findIndex((entry)=> entry.id === product.id)
+
+        if (productInCart >= 0) {
+            const newCart = structuredClone(cart)
+            newCart[productInCart].quantity += 1
+            return setCart(newCart)
+        }
+        setCart((previousState) => ([
+            ...previousState,
+            {
+                ...product,
+                quantity: 1
+            }
+        ]))
+    }
+    const clearCart = () => {
+        setCart([])
+    }
+    const removeFromCart = (product) => {
+        setCart(previousState => previousState.filter(entry => entry.id !== product.id))
+    }
+    ```
+
+??? example "Example functionalities with useReducer()"
+    ```jsx
+    const reducer = (state, action) => {
+    const {type: actionType, payload: actionPayload} = action
+    const { id } = actionPayload
+
+    switch (actionType) {
+        case "ADD_TO_CART": {        
+            const productInCartIndex = state.findIndex((entry)=> entry.id === id)
+            if (productInCartIndex >= 0) {
+                const newState = structuredClone(state)
+                newState[productInCartIndex].quantity += 1
+                return newState
+            }
+            return [
+                ...state,
+                {
+                    ...actionPayload,
+                    quantity: 1
+                }
+            ]
+        }
+        case "REMOVE_FROM_CART": {
+            return state.filter((entry) => entry.id !== id)
+        }
+        case "CLEAR_FROM_CART": {
+            return initialState
+        }            
+    }
+    return state
+    }
+    ```
+
 
 ## Syntax / Operators
 **Spread syntax**
@@ -278,6 +431,14 @@ Access the elements indexed by params of an array.
     console.log(animals.slice(2,4))
     Array ['camel', 'duck']
     ```
+
+`structuredClone(value)`
+
+Creates a deep clone (a copy) of a given value.
+
+Use case:
+
+When a state must be changed but can't be modified directly.
 
 # Git
 
