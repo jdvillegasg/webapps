@@ -1,5 +1,5 @@
-site_name: React starting projects from midudev
-theme: 
+site_name: Summary of frontend projects and information
+theme:
   icon:
     admonition:
       example: simple/react
@@ -8,6 +8,7 @@ theme:
       info: simple/css3
       tip: simple/javascript
       quote: simple/git
+      success: material/information
   name: material
   features:
     - navigation.tabs
@@ -20,7 +21,7 @@ theme:
     - content.code.annotate
   language: en
   palette:
-  # Palette toggle for light mode
+    # Palette toggle for light mode
     - scheme: default
       primary: indigo
       toggle:
@@ -70,3 +71,22 @@ plugins:
   - search
   - mkdocstrings
   - glightbox
+
+nav:
+  - Home: index.md
+  - Setup tools: GettingStarted.md
+  - Projects from Midudev channel:
+      - Twitter Follow Card: Twitter-follow-card.md
+      - TicTacToe: Tic-tac-toe.md
+      - Cat generator: Cat-generator.md
+      - Movies search display: Movies-search-with-API.md
+      - Shopping cart app: Shopping-cart.md
+      - Custom React Router: React-Router.md
+  - Spare projects:
+      - Dashboard with Tailwind: Dashboard-App.md
+  - Review of Front-end web stack:
+      - Review of CSS: ReviewCSS.md
+      - Review of HTML: ReviewHTML.md
+      - Review of React: ReviewReact.md
+      - Review of Javascript: ReviewJS.md
+      - Review of Git: ReviewGit.md
