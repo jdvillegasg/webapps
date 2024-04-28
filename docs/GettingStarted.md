@@ -167,3 +167,6 @@ test: {
 
 Utilities library to test applications. Install it by executing `npm install @testing-library/react`.
 
+# Install eslint with typescrit
+
+Execute `npx eslint --init`

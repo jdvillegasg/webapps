@@ -26,6 +26,9 @@ When `button` is used with `form`, it should be of type `type="submit"`
 
  > "The <path> SVG element is the generic element to define a shape. All the basic shapes can be created with a path element" [^4]
 
+A form can also be submitted without a button. For instance, by pressing `ENTER` in an input text field, enclosed in a form, the submit event of the form will be triggered.
+
+
 [^3]: [SVG tag](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/svg)
 
 [^4]: [Path SVG tag](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/path)

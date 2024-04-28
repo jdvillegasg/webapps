@@ -3,7 +3,7 @@ import { Router } from "./Router.jsx";
 import Page404 from "./pages/404.jsx";
 import { SearchPage } from "./pages/SearchPage.jsx";
 import { Route } from "./Route.jsx";
-import { Component, Suspense, lazy } from "react";
+import { Suspense, lazy } from "react";
 
 // Just loads the javascript that we need
 const LazyHomePage = lazy(() => import("./pages/Home.jsx"));
