@@ -476,7 +476,7 @@ function App: React.FC<Props> ({todos}){
 }
 ```
 
-The syntax `<>` in `React.FC<Props>` is serves to pass a parameter having the type of the props.
+The syntax `<>` in `React.FC<Props>` serves to pass a parameter having the type of the props.
 
 ## Imports
 

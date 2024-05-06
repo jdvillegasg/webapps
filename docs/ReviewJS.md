@@ -64,6 +64,16 @@ const truthyArray = array.filter(Boolean)
 // truthyArray = [{ good }, { great }]
 ```
 
+`map` 
+
+Can be used as well for Objects by retrieving the key/value pairs of the object:
+
+```js
+Object.entries(myObject).map(([key, val])=>{
+... // the code to execute on each object entry
+})
+```
+
 ## Events
 
 `dispatchEvent()`
@@ -96,6 +106,14 @@ Event default action would not be performed, so that the developer handles it.
 
 Modified events are events trigger by an user interaction (i.e. a click) that also are modified by another user interaction (i.e. user presses the `CTRL`key in the keyboard, while clicking).
 
+`Event bubbling`
+
+In a component with nested elements the deeper element will trigger the event and subsequente outer elements will trigger their respective events (if any).
+
+ >"The most deeply nested element that caused the event is called a target element, accessible as `event.target`" [^2]
+
+[^2]: [Event bubbling](https://javascript.info/bubbling-and-capturing)
+
 ## Web API
 
 `FileReader()`
@@ -105,3 +123,9 @@ Lets web applications reade asynchronously the contents of files.
  > "FileReader can only access the contents of files that the user has explicitly selected, either using an HTML <input type="file"> element or by drag and drop. It cannot be used to read a file by pathname from the user's file system. To read files on the client's file system by pathname, use the File System Access API. To read server-side files, use fetch(), with CORS permission if reading cross-domain." [^2]
 
  [^2]: [FileReader](https://developer.mozilla.org/en-US/docs/Web/API/FileReader)
+
+`FormData()`
+
+ >"The FormData interface provides a way to construct a set of key/value pairs representing form fields and their values, which can be sent using the fetch(), XMLHttpRequest.send() or navigator.sendBeacon() methods." [^3]
+
+[^3]: [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData)

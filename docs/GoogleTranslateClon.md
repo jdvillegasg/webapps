@@ -12,3 +12,7 @@ Then, we need to define the actions will be performed to change the object:
 * User change input and output languages
 * User change input language textbox content
 
+# Used libraries
+
+* React bootstrap
+

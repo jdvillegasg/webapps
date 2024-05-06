@@ -1,72 +1,72 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import { useReducer } from "react";
-import { TranslatorState, Action } from "./types";
-
-const initialState: TranslatorState = {
-  fromLanguage: "auto",
-  toLanguage: "en",
-  fromText: "",
-  result: "",
-  loading: false,
-};
-
-const reducer = (state: TranslatorState, action: Action): TranslatorState => {
-  const { type } = action;
-  switch (type) {
-    case "INTERCHANGE_LANGUAGES": {
-      return {
-        ...state,
-        fromLanguage: state.toLanguage,
-        toLanguage: state.fromLanguage,
-      };
-    }
-    case "SET_FROM_LANGUAGE": {
-      return {
-        ...state,
-        fromLanguage: action.payload,
-      };
-    }
-    case "SET_TO_LANGUAGE": {
-      return {
-        ...state,
-        toLanguage: action.payload,
-      };
-    }
-    case "SET_FROM_TEXT": {
-      return {
-        ...state,
-        loading: true,
-        fromText: action.payload,
-      };
-    }
-    case "SET_RESULT": {
-      return {
-        ...state,
-        loading: false,
-        result: action.payload,
-      };
-    }
-  }
-  return state;
-};
+import { useStore } from "./hooks/useStore";
+import { Container, Row, Col, Button, Stack } from "react-bootstrap";
+import { AUTO_LANGUAGE } from "./constants";
+import { ArrowsIcon } from "./components/Icons";
+import { LanguageSelector } from "./components/LanguageSelector";
+import { SectionType } from "./constants";
+import { TextArea } from "./components/TextArea";
 
 function App() {
-  const [{ fromLanguage }, dispatch] = useReducer(reducer, initialState);
-
-  console.log(fromLanguage);
+  const {
+    fromLanguage,
+    fromText,
+    toLanguage,
+    result,
+    loading,
+    interchangeLanguages,
+    setFromLanguage,
+    setToLanguage,
+    setFromText,
+    setResult,
+  } = useStore();
 
   return (
-    <div className="App">
+    <Container fluid>
       <h1>Google Translate</h1>
-      <button
-        onClick={() => {
-          dispatch({ type: "SET_FROM_LANGUAGE", payload: "es" });
-        }}
-      >
-        Change to spanish
-      </button>
-    </div>
+      <Row>
+        <Col>
+          <Stack gap={2}>
+            <LanguageSelector
+              type={SectionType.From}
+              value={fromLanguage}
+              onChange={setFromLanguage}
+            />
+            <TextArea
+              loading={loading}
+              type={SectionType.From}
+              value={fromText}
+              onChange={setFromText}
+            ></TextArea>
+          </Stack>
+        </Col>
+        <Col xs="auto">
+          <Button
+            variant="link"
+            disabled={fromLanguage === AUTO_LANGUAGE}
+            onClick={interchangeLanguages}
+          >
+            <ArrowsIcon></ArrowsIcon>
+          </Button>
+        </Col>
+        <Col>
+          <Stack gap={2}>
+            <LanguageSelector
+              type={SectionType.To}
+              value={toLanguage}
+              onChange={setToLanguage}
+            />
+            <TextArea
+              loading={loading}
+              type={SectionType.To}
+              value={result}
+              onChange={setResult}
+            ></TextArea>
+          </Stack>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

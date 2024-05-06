@@ -1,13 +1,16 @@
+import { AUTO_LANGUAGE, SUPPORTED_LANGUAGES } from "./constants";
+
+export type Language = keyof typeof SUPPORTED_LANGUAGES;
+export type AutoLanguage = typeof AUTO_LANGUAGE;
+export type FromLanguage = Language | AutoLanguage;
+
 export interface TranslatorState {
-  fromLanguage: InputLangs;
-  toLanguage: OutputLangs;
+  fromLanguage: FromLanguage;
+  toLanguage: Language;
   fromText: string;
   result: string;
   loading: boolean;
 }
-
-export type InputLangs = "auto" | "en" | "fr" | "es" | "de";
-export type OutputLangs = "auto" | "en" | "fr" | "es" | "de";
 
 export type ActionTypes =
   | "INTERCHANGE_LANGUAGES"
@@ -23,7 +26,7 @@ interface ActionA {
 
 export type Action =
   | { type: "INTERCHANGE_LANGUAGES" }
-  | { type: "SET_FROM_LANGUAGE"; payload: InputLangs }
-  | { type: "SET_TO_LANGUAGE"; payload: OutputLangs }
+  | { type: "SET_FROM_LANGUAGE"; payload: FromLanguage }
+  | { type: "SET_TO_LANGUAGE"; payload: Language }
   | { type: "SET_FROM_TEXT"; payload: string }
   | { type: "SET_RESULT"; payload: string };
