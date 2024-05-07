@@ -83,3 +83,42 @@ A middleware calls a function that calls a function that calls a function:
 The reason why all the callbacks are not done in the first callback, is because, due to the nature of the middleware, these subsequent callbacks are done at *different times*. 
 
  > More specifically, we can use a middleware to execute some code just before the state is udpated, and just after the state is udpated.
+
+ # Reducers
+  
+Are implemented on the file where our `slice` is saved. The logic of the reducer can be implemented there as well. Here an example of doing so:
+
+!!! example "Reducers"
+    ```jsx
+    export const usersSlice = createSlice({
+    name: "users",
+    initialState,
+    reducers: {
+        deleteUserById: (state, action: PayloadAction<UserId>) => {
+        const id = action.payload;
+        return state.filter((entry) => entry.id !== id);
+        },
+        addNewUser: (state, action: PayloadAction<User>) => {
+        const id = crypto.randomUUID();
+        return [...state, { id, ...action.payload }];
+        },
+    },
+    });
+    ```
+
+In the example above, there are two reducers (`addNewUser` and `deleteUserById`), which receive by parameters the `state` and some `action`.
+
+It is possible to type the action with a Redux Toolkit native type for the payload (`PayloadAction`).
+
+# Mutating the state
+
+In Redux Toolkit it is not necessary to create a new state (as when returning it in a reducer), but the state can be modified/mutated:
+
+!!! example "Mutating the state"
+    ```jsx
+    // Return new state
+    const newState = [...state, action.payload]
+    return newState
+    // Mutate the state
+    state.push(action.payload)
+    ```
