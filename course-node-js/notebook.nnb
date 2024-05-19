@@ -1,0 +1,183 @@
+{
+    "cells": [
+        {
+            "language": "markdown",
+            "source": [
+                "<h1>Global Variable in Node JS<h1>"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "console.log(globalThis)"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "Object [global] {",
+                                "  global: <ref *1> Object [global] {",
+                                "    global: [Circular *1],",
+                                "    clearImmediate: [Function: clearImmediate],",
+                                "    setImmediate: [Function: setImmediate] {",
+                                "      [Symbol(nodejs.util.promisify.custom)]: [Getter]",
+                                "    },",
+                                "    clearInterval: [Function: clearInterval],",
+                                "    clearTimeout: [Function: clearTimeout],",
+                                "    setInterval: [Function: setInterval],",
+                                "    setTimeout: [Function: setTimeout] {",
+                                "      [Symbol(nodejs.util.promisify.custom)]: [Getter]",
+                                "    },",
+                                "    queueMicrotask: [Function: queueMicrotask],",
+                                "    structuredClone: [Function: structuredClone],",
+                                "    atob: [Getter/Setter],",
+                                "    btoa: [Getter/Setter],",
+                                "    performance: [Getter/Setter],",
+                                "    fetch: [Function: fetch],",
+                                "    crypto: [Getter],",
+                                "    __extends: [Function: t],",
+                                "    __assign: [Function: assign],",
+                                "    __rest: [Function: r],",
+                                "    __decorate: [Function: i],",
+                                "    __param: [Function: s],",
+                                "    __metadata: [Function: o],",
+                                "    __awaiter: [Function: a],",
+                                "    __generator: [Function: u],",
+                                "    __exportStar: [Function: c],",
+                                "    __createBinding: [Function (anonymous)],",
+                                "    __values: [Function: l],",
+                                "    __read: [Function: h],",
+                                "    __spread: [Function: f],",
+                                "    __spreadArrays: [Function: d],",
+                                "    __spreadArray: [Function: p],",
+                                "    __await: [Function: m],",
+                                "    __asyncGenerator: [Function: g],",
+                                "    __asyncDelegator: [Function: D],",
+                                "    __asyncValues: [Function: y],",
+                                "    __makeTemplateObject: [Function: b],",
+                                "    __importStar: [Function: _],",
+                                "    __importDefault: [Function: v],",
+                                "    __classPrivateFieldGet: [Function: E],",
+                                "    __classPrivateFieldSet: [Function: w],",
+                                "    __dirname: 'c:\\\\Users\\\\julia\\\\Documents\\\\Repositories\\\\learning\\\\react\\\\projects\\\\course-node-js',",
+                                "    __filename: 'c:\\\\Users\\\\julia\\\\Documents\\\\Repositories\\\\learning\\\\react\\\\projects\\\\course-node-js\\\\__exec.js'",
+                                "  },",
+                                "  clearImmediate: [Function: clearImmediate],",
+                                "  setImmediate: [Function: setImmediate] {",
+                                "    [Symbol(nodejs.util.promisify.custom)]: [Getter]",
+                                "  },",
+                                "  clearInterval: [Function: clearInterval],",
+                                "  clearTimeout: [Function: clearTimeout],",
+                                "  setInterval: [Function: setInterval],",
+                                "  setTimeout: [Function: setTimeout] {",
+                                "    [Symbol(nodejs.util.promisify.custom)]: [Getter]",
+                                "  },",
+                                "  queueMicrotask: [Function: queueMicrotask],",
+                                "  structuredClone: [Function: structuredClone],",
+                                "  atob: [Getter/Setter],",
+                                "  btoa: [Getter/Setter],",
+                                "  performance: [Getter/Setter],",
+                                "  fetch: [Function: fetch],",
+                                "  crypto: [Getter],",
+                                "  __extends: [Function: t],",
+                                "  __assign: [Function: assign],",
+                                "  __rest: [Function: r],",
+                                "  __decorate: [Function: i],",
+                                "  __param: [Function: s],",
+                                "  __metadata: [Function: o],",
+                                "  __awaiter: [Function: a],",
+                                "  __generator: [Function: u],",
+                                "  __exportStar: [Function: c],",
+                                "  __createBinding: [Function (anonymous)],",
+                                "  __values: [Function: l],",
+                                "  __read: [Function: h],",
+                                "  __spread: [Function: f],",
+                                "  __spreadArrays: [Function: d],",
+                                "  __spreadArray: [Function: p],",
+                                "  __await: [Function: m],",
+                                "  __asyncGenerator: [Function: g],",
+                                "  __asyncDelegator: [Function: D],",
+                                "  __asyncValues: [Function: y],",
+                                "  __makeTemplateObject: [Function: b],",
+                                "  __importStar: [Function: _],",
+                                "  __importDefault: [Function: v],",
+                                "  __classPrivateFieldGet: [Function: E],",
+                                "  __classPrivateFieldSet: [Function: w],",
+                                "  __dirname: 'c:\\\\Users\\\\julia\\\\Documents\\\\Repositories\\\\learning\\\\react\\\\projects\\\\course-node-js',",
+                                "  __filename: 'c:\\\\Users\\\\julia\\\\Documents\\\\Repositories\\\\learning\\\\react\\\\projects\\\\course-node-js\\\\__exec.js'",
+                                "}",
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<h1>Design patterns</h1>"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "Classical module system in NodeJS is called `CommonJS`. It is not deprecated, but it is old and not recommended"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "Extension `.js` by default uses `CommonJS` module system, while extension `.mjs` uses `ES` module system"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<h1>Native NodeJS modules</h1>"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<h3>OS</h3>"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const os = require('node:os')\r\nconsole.log(\"OS name\" + os.platform())\r\nconsole.log(\"OS version\" + os.release());\r\nconsole.log(\"OS Arch\" + os.arch());\r\nconsole.log(\"OS # CPUs\" + os.cpus());\r\nconsole.log(\"OS Free memory\" + os.freemem() /1024/ 1024);\r\nconsole.log(\"OS Total memory\" + os.totalmem() /1024 /1024); "
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "OS namewin32",
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                ""
+            ],
+            "outputs": []
+        }
+    ]
+}
