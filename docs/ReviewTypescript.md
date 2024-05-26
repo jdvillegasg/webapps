@@ -529,3 +529,7 @@ Get the types of an existing dictionary `TODO_FILTERS`
 ```tsx
 typeof TODO_FILTERS[keyof typeof TODO_FILTERS]
 ```
+
+`! operator`
+
+Add `!` at the end of a variable/const to tell TypeScript that the const will take a value when it hesitates between a given type and `undefined`.

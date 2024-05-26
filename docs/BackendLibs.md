@@ -92,4 +92,40 @@ and Vite plugihn
 bun install --save-dev @tanstack/router-vite-plugin @tanstack/router-devtools
 ```
 
-Follow the instructions in the `Quick start` page of the Tanstack Router documentation.
+Follow the instructions in the `Quick start` page of the Tanstack Router documentation:
+
+* Cofigure the Vite Plugin
+* Create the `src/routes/__root.tsx`, `src/routes/index.tsx` and `src/routes/about.tsx`, with the template described in the Tanstack Router `Quickstart` page.
+* Modify the `src/main.tsx` file
+
+??? example "Loader Tanstack Router"
+    ```jsx
+    export const Route = createFileRoute("/expenses")({
+        component: Expenses,
+        loader:
+    });
+    ```
+Load in your content before the actual page is seen (people sees a loading state before the actual page).
+
+# Tanstack Form
+
+```sh
+bun add i @tanstack/react-form
+```
+# Login authentication
+
+## Kinde 
+
+Auth and user management. This functionality is better implemented in the backend than in the frontend.
+
+* Sign up and log in
+* When asked create a new business
+* Choose the Backend > Node.js 
+* Choose Email and Google (or as many social authentication services you want)
+
+Don't have an SDK to work with Bun or Hono, but you can follow the TypeScript SDK docs.
+
+* Install `bun install @kinde-oss/kinde-typescript-sdk`
+* Copy the `kindeClient` code for NodeJS
+* Add the routes as shown in the TypeSript SDK docs for NodeJS, but replace the `express` syntax with the `Hono` syntax.
+* Copy the `sessionManager`

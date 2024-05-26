@@ -68,3 +68,7 @@ Footer element, typically containing information about authorship, copyright dat
  >"The `main` HTML element represents the dominant content of the `body` of a document. The main content area consists of content that is directly related to or expands upon the central topic of a document, or the central functionality of an application". [^8]
 
  [^8]: [Main tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/main)
+
+ `<pre>`
+
+ Displays HTML text as it is (as HTML text).

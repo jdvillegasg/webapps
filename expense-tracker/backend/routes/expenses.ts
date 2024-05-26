@@ -8,7 +8,7 @@ const expenseSchema = z.object({
   amount: z.number().int().positive(),
 });
 
-type Expense = z.infer<typeof expenseSchema>;
+export type Expense = z.infer<typeof expenseSchema>;
 
 const createPostSchema = expenseSchema.omit({ id: true });
 
