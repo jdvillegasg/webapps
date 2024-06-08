@@ -128,4 +128,22 @@ Don't have an SDK to work with Bun or Hono, but you can follow the TypeScript SD
 * Install `bun install @kinde-oss/kinde-typescript-sdk`
 * Copy the `kindeClient` code for NodeJS
 * Add the routes as shown in the TypeSript SDK docs for NodeJS, but replace the `express` syntax with the `Hono` syntax.
+* Create a `.env` file with the details of your Kinde App:
+    * KINDE_DOMAIN
+    * KINDE_CLIENT_ID
+    * KINDE_CLIENT_SECRET
+    * KINDE_REDIRECT_URI
+    * KINDE_LOGOUT_REDIRECT_URI
 * Copy the `sessionManager`
+* Go to the `Callback URLs` section in your Kinde App dashboard, and make sure that the URLs are correct:
+
+!!! success "Example Callback URL section in Kinde"
+    ```jsx
+    //URL for callback and development
+    http://localhost:5173/api/callback
+    ```
+
+### Kinde notes
+
+* Kinde does not provide an opinion on how the developer stores the session details: it gives a token that identifies or authenticates an user.
+* When login, if the Session Manager stores the authentication info in cookies, the auth info will be stored in the browser cookies until the user logs out.

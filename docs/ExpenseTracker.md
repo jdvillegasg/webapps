@@ -101,4 +101,5 @@ To deploy succesfully with this approach the following folder structure should b
 
 # Features
 
-*
+* Store Kinde tokens on cookies in the browser.
+* Api routes will only be shown for a user that has login.

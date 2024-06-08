@@ -18,7 +18,7 @@ const fakeExpenses: Expense[] = [
   { id: 3, title: "Rent", amount: 1000 },
 ];
 
-// Chained route
+// Routes here are /api/expenses, /api/expenses/total-spent, and so on
 export const expensesRoute = new Hono()
   .get("/", (c) => {
     return c.json({ expenses: fakeExpenses });
