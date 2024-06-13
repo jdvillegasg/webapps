@@ -33,6 +33,58 @@ Then in your `Bun` server:
 
 ## Middleware
 
+In [Hono Helpers Middleware](https://hono.dev/helpers/factory#createfactory) there are some helper methods to create a Middleware.
+
+In the file where the `createKindeServerClient()` method and the `sessionManager` implementation are defined, add the following helper methods:
+
+!!! example "Hono Middleware with helper methods"
+    ```jsx
+    import { createFactory, createMiddleware } from 'hono/factory'
+
+    type Env = {
+        Variables: {
+          user: string
+        }
+    }
+
+    const messageMiddleware = createMiddleware<Env>(async (c, next) => {
+        // example code
+        await next()
+        // example code
+    })
+    ```
+
+We can call the created middleware into our route:
+
+!!! example "Call middleware from Hono routes (endpoints)"
+    ```jsx
+    .get("/myendpoint", messageMiddleware, async (c) => {
+        //Example code here
+    })
+    ```
+
+And if we set variables in the middleware, we can retrieve them in the endpoint. For example:
+
+!!! example "Create a varable in middleware"
+    ```jsx
+    export const getUserMiddlewareMethod = createMiddleware<Env>(
+    async (c, next) => {
+    //session manager implementation
+    const user = await kindeClient.getUserProfile(manager);
+    
+    //THE VARIABLE "USER" IS ACCESIBLE THROUGH THE CONTEXT MANAGER "c" 
+    c.set("user", user);
+    await next();
+    //...
+    ```
+
+!!! example "Retrieve variable"
+    ```jsx
+    .get("/myendpoint", messageMiddleware, async (c) => {
+        const user = c.var.user
+    })
+    ```
+
 ### Logger
 Logs the following details for each request:
 
@@ -71,12 +123,31 @@ bun add @tanstack/react-query
 Follow the instructions in the `Quick start` page of the Tanstack Query documentation.
 
 * Wrap the frontend app in a `QueryClientProvider`.
-* Use the `useQuery` hook to 
+* Use the `useQuery` hook:
 
 !!! example "Tanstack useQuery hook"
     ```jsx
-    1
+    const { error, isPending, data } = useQuery(queryOptions);
     ```
+Among the `queryOptions` it is important to distinguish:
+
+* `queryKey`: name to identify the query, related with the name of the function
+* `queryFn`: function to be called
+* `staleTime`: if set to `Infinity`, the moment one query uses the `queryOptions`, the result will be cached until the stored info is manually invalidated or the user refreshes the page (i.e. when the user login or logout).
+
+!!! example "Example of queryOptions"
+    ```jsx
+    import { queryOptions } from "@tanstack/react-query
+
+    const userQueryOpts = queryOptions({
+        queryKey: ["get-current-user"],
+        queryFn: getCurrentUser,
+        staleTime:Infinity
+    });
+    ```
+
+!!! success "Note on useQuery hook"
+    The `useQuery` hook *can only be used within a component* as any React hook. If developer requires access to the query client outside a component, it should be passed as an argument to the `createRouter` method identified with the key `context`.
 
 # Tanstack Router
 
@@ -106,6 +177,27 @@ Follow the instructions in the `Quick start` page of the Tanstack Router documen
     });
     ```
 Load in your content before the actual page is seen (people sees a loading state before the actual page).
+
+## Authenticated routes
+
+We can restrict user access to certain routes if the user is not authenticated.
+
+We can create a new route where all the authentication logic is present, and make use of it in other routes. The new route is not itself a frontend page, but a step into the actual route the user might want to go.
+
+When using the `createFileRoute` method, the `beforeLoad` key property can be used to execute something before the actual route (called by the `component` key property) or any of the child routes.
+
+!!! example "Authenticated routes in file _authenticated.tsx"
+    ```jsx
+    const Route = createFileRoute({
+        beforeLoad: () => {
+            // some logic
+            return { user: { name: Julian}}
+        },
+        component: MyComponent
+    })
+    ```
+
+We then have to place the routes we want to use the authenticated logic into a folder called as the file having the authentication logic (i.e.. if the file is named `_authenticated.tsx` as in the example above, our folder should be named `_authenticated` as well).
 
 # Tanstack Form
 

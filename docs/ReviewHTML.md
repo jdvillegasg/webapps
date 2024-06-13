@@ -9,11 +9,13 @@
 
 ## Tags
 
-`<input>`
+`<form>` 
 
-`form` 
+When `button` is used with `form`, it should be of type `type="submit"`.
 
-When `button` is used with `form`, it should be of type `type="submit"`
+A form can also be submitted without a button. For instance, by pressing `ENTER` in an input text field, enclosed in a form, the submit event of the form will be triggered.
+
+`<svg>` 
 
  > "The `svg` is a container that defines a new coordinate system and viewport. It is used as the outermost element of SVG documents, but it can also be used to embed an SVG fragment inside an SVG or HTML document".[^3]
 
@@ -26,9 +28,6 @@ When `button` is used with `form`, it should be of type `type="submit"`
 
  > "The <path> SVG element is the generic element to define a shape. All the basic shapes can be created with a path element" [^4]
 
-A form can also be submitted without a button. For instance, by pressing `ENTER` in an input text field, enclosed in a form, the submit event of the form will be triggered.
-
-
 [^3]: [SVG tag](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/svg)
 
 [^4]: [Path SVG tag](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/path)
@@ -36,7 +35,6 @@ A form can also be submitted without a button. For instance, by pressing `ENTER`
 `<label>`
 
 Represents a caption for an item, that can be used with an `<input>` element. The attribute `for`(or `htmlFor`) should be the value of the `id` attribute of the `<input>` element.
-
 
 Use cases:
  > "When a user clicks or touches/taps a label, the browser passes the focus to its associated input (the resulting event is also raised for the input)" [^5] 

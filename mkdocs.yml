@@ -82,11 +82,21 @@ nav:
       - Movies search display: Movies-search-with-API.md
       - Shopping cart app: Shopping-cart.md
       - Custom React Router: React-Router.md
+      - Google translate clon: GoogleTranslateClon.md
   - Spare projects:
       - Dashboard with Tailwind: Dashboard-App.md
-  - Review of Front-end web stack:
+      - Expense tracker: ExpenseTracker.md
+      - Shirt printing: ShirtPrinting.md
+  - Review of Frontend:
       - Review of CSS: ReviewCSS.md
       - Review of HTML: ReviewHTML.md
       - Review of React: ReviewReact.md
       - Review of Javascript: ReviewJS.md
+      - Frontend libraries: FrontendLibs.md
+      - Review of Tailwind: ReviewTailwind.md
+      - Review Typescript: ReviewTypescript.d
+  - Review of Database: ReviewDatabase.md
+  - Review of Backend: BackendLibs.md
+  - Review of Full Stack: FullStack.md
+  - Review of web dev tools:
       - Review of Git: ReviewGit.md

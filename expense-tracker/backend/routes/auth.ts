@@ -1,5 +1,6 @@
 import { Hono } from "hono";
 import { kindeClient, sessionManager } from "../kinde";
+import { getUserMiddlewareMethod } from "../kinde";
 
 // Routes here are /api/login, /api/register, and so on
 export const authRoute = new Hono()
@@ -14,7 +15,9 @@ export const authRoute = new Hono()
   .get("/callback", async (c) => {
     // get called every time the user login or register
     const url = new URL(c.req.url);
+    console.log("Before await successful in callback after login");
     await kindeClient.handleRedirectToApp(sessionManager(c), url);
+    console.log("Await successful in callback after login");
     return c.redirect("/");
   })
   .get("/logout", async (c) => {
@@ -22,16 +25,7 @@ export const authRoute = new Hono()
     const logoutUrl = await kindeClient.logout(sessionManager(c));
     return c.redirect(logoutUrl.toString());
   })
-  .get("/checkme", async (c) => {
-    // custom endpoint -not present in Kinde docs - to check if user is authenticated
-
-    const manager = sessionManager(c);
-    const isAuthenticated = await kindeClient.isAuthenticated(manager);
-
-    if (!isAuthenticated) {
-      return c.json({ error: "Unauthorized" }, 401);
-    }
-
-    const user = await kindeClient.getUser(manager);
+  .get("/checkme", getUserMiddlewareMethod, async (c) => {
+    const user = c.var.user;
     return c.json({ user });
   });
