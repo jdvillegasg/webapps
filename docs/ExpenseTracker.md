@@ -103,3 +103,8 @@ To deploy succesfully with this approach the following folder structure should b
 
 * Store Kinde tokens on cookies in the browser.
 * Api routes will only be shown for a user that has login.
+* PostgreSQL database with a single expenses table having the following info:
+    * `id`
+    * `user_id` (provided by Kinde)
+    * `title`
+    * `amount`

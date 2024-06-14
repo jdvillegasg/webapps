@@ -119,3 +119,22 @@ RUN bun run build
 # Remove all files in frontend except for the dist folder
 RUN find . -mindepth 1 ! -regex '^./dist\(/.*\)?' -delete
 ```
+
+### Set environment variables
+
+If we are using environment variables in our app, for example, to authenticate in an Auth service provider (like Kinde), we need to let Fly.io know them. 
+
+The credentials stored in the `.env` file should be the ones used for deployment and not for development, i.e.: if your credentials involve `localhost` URLs they must be changed to the actual domain name assigned by Fly.io.
+
+The `.env` can be "imported" into Fly.io by executing:
+
+```bash
+    fly secrets import < .env
+```
+
+However, since the same `.env` file is used in development, we need to either create another one for production having the actual URLs, or update specifically the URLs by executing:
+
+```bash
+    fly secrets set KINDE_REDIRECT_URI=https://expense-tracker-jdvg-3.fly.dev/api/callback
+    fly secrets set KINDE_LOGOUT_REDIRECT_URI=https://expense-tracker-jdvg-3.fly.dev
+```

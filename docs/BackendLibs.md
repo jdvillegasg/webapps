@@ -234,6 +234,9 @@ Don't have an SDK to work with Bun or Hono, but you can follow the TypeScript SD
     //URL for callback and development
     http://localhost:5173/api/callback
     ```
+We can also add the URL provided by our deployment service (Fly.io) to the `Allowed logout redirect URLs` and `Allowed callback URLs` section. 
+
+So in the previous example we replace `localhost:5173` with the domain assigned by (for example) Fly.io.
 
 ### Kinde notes
 

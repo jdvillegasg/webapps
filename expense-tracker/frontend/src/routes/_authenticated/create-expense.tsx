@@ -10,22 +10,24 @@ export const Route = createFileRoute("/_authenticated/create-expense")({
 });
 
 function CreateExpense() {
-  // Create a useNavigatefff
+  // Create a useNavigate
   const navigateTo = useNavigate();
 
   // Copy and paste from TanStack Form Overview documentation
   const form = useForm({
     defaultValues: {
       title: "",
-      amount: 0,
+      amount: "",
     },
     onSubmit: async ({ value }) => {
       // Do something with form data
 
       /* The form.Subscribe will block the button until submission
       the promise is to simulate an excesive time to submit 
-      the form to the server*/
+      the form to the server */
+      /*
       await new Promise((r) => setTimeout(r, 3000));
+      */
 
       const resolve = await api.expenses.$post({ json: value });
       if (!resolve.ok) {
@@ -70,7 +72,7 @@ function CreateExpense() {
                 value={field.state.value}
                 onBlur={field.handleBlur}
                 type="number"
-                onChange={(e) => field.handleChange(e.target.valueAsNumber)}
+                onChange={(e) => field.handleChange(e.target.value)}
               />
             </>
           )}
