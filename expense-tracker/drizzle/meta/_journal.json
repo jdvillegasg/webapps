@@ -15,6 +15,20 @@
       "when": 1718336507095,
       "tag": "0001_curvy_quicksilver",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1718749715017,
+      "tag": "0002_bent_impossible_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1718818740413,
+      "tag": "0003_dizzy_the_enforcers",
+      "breakpoints": true
     }
   ]
 }

@@ -14,8 +14,21 @@ async function getCurrentUser() {
   return data;
 }
 
+const getAllExpenses = async () => {
+  //await new Promise((resolve) => setTimeout(resolve, 3000));
+  const result = await api.expenses.$get();
+  if (!result.ok) throw new Error("Expense not found");
+  const data = await result.json();
+  return data;
+};
+
 export const userQueryOpts = queryOptions({
   queryKey: ["get-curent-user"],
   queryFn: getCurrentUser,
   staleTime: Infinity,
+});
+
+export const getAllExpensesOpts = queryOptions({
+  queryKey: ["get-all-expenses"],
+  queryFn: getAllExpenses,
 });

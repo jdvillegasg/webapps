@@ -204,6 +204,15 @@ We then have to place the routes we want to use the authenticated logic into a f
 ```sh
 bun add i @tanstack/react-form
 ```
+
+We can add form validation, so that if the user doesn't add any of the required fields, the validator shows there is something missing.
+
+```sh
+bun add i @tanstack/zod-form-adapter
+```
+
+And use what the code explained in [Tanstack Form Adapter](https://tanstack.com/form/latest/docs/framework/react/guides/validation)
+
 # Login authentication
 
 ## Kinde 

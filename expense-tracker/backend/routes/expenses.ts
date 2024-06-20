@@ -1,22 +1,13 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
-import { z } from "zod";
+import { createExpenseSchema } from "../sharedTypes";
 import { getUserMiddlewareMethod } from "../kinde";
 import { db } from "../db/index";
-import { expensesTable } from "../db/schemas/expenses";
+import { expensesTable, insertExpenseSchema } from "../db/schemas/expenses";
 import { desc, eq, sum, and } from "drizzle-orm";
 
-const expenseSchema = z.object({
-  id: z.number().int().positive().min(1),
-  title: z.string().min(3).max(100),
-  amount: z.string(),
-});
-
-export type Expense = z.infer<typeof expenseSchema>;
-
-const createPostSchema = expenseSchema.omit({ id: true });
-
 /* Mock
+export type Expense = z.infer<typeof expenseSchema>;
 const fakeExpenses: Expense[] = [
   { id: 1, title: "Groceries", amount: "50" },
   { id: 2, title: "Utilities", amount: "100" },
@@ -55,17 +46,23 @@ export const expensesRoute = new Hono()
   .post(
     "/",
     getUserMiddlewareMethod,
-    zValidator("json", createPostSchema),
+    zValidator("json", createExpenseSchema),
     async (c) => {
       const expense = await c.req.valid("json");
+      console.log(expense);
+      // Ultimate validated object, since it includes the userId property to be inserted in the db
+      const furtherValidatedExpense = insertExpenseSchema.parse({
+        ...expense,
+        userId: c.var.user.id,
+      });
 
+      // The db always return an array, whether it is an actual array or there is only one element
+      // since we know, the insert operation only inserts one expense at a time, we can just get the first entry of the array
       const result = await db
         .insert(expensesTable)
-        .values({
-          ...expense,
-          userId: c.var.user.id,
-        })
-        .returning();
+        .values(furtherValidatedExpense)
+        .returning()
+        .then((res) => res[0]); // this will return only the first entry
 
       //fakeExpenses.push({ ...expense, id: fakeExpenses.length + 1 });
 
