@@ -9,6 +9,7 @@ theme:
       tip: simple/javascript
       quote: simple/git
       success: material/information
+      failure: material/bash
   name: material
   features:
     - navigation.tabs

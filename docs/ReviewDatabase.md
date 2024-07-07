@@ -1,3 +1,28 @@
+# Localhost database
+## Postgres
+
+In Linux install postgres by executing:
+
+!!! failure "Install postgres"
+    sudo apt install postgresql postgresql-contrib
+    sudo systemctl start postgresql
+    sudo systemctl enable postgresql
+
+To run `Postgres` on Linux:
+
+!!! failure "Run postgres"
+    sudo -u postgres psql
+
+Once in the `postgres` shell, you can create a database with:
+
+!!! failure "Create database"
+    postgres=# CREATE DATABASE mydb;
+
+or create an user with a given given password, and grant they privileges:
+
+!!! failure "Create user, password and user privileges"
+    postgres=# create user myuser with encrypted password 'mypass';
+    postgres=# grant all privileges on database mydb to myuser;
 
 # Database service
 
