@@ -1,9 +1,20 @@
 import time
-from flask import Flask, request
+from flask import Flask, request, send_from_directory
 from ortools.linear_solver import pywraplp
 import numpy as np
+import os
 
 app = Flask(__name__)
+
+dist_folder = os.path.join(os.getcwd(), "..", "dist")
+
+# Serve static files
+@app.route("/", defaults={"filename": ""})
+@app.route("/<path:filename>")
+def index(filename):
+    if not filename:
+        filename = "index.html"
+    return send_from_directory(dist_folder, filename)
 
 @app.route('/time')
 def get_current_time():

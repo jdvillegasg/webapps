@@ -9,8 +9,8 @@ function App() {
       <h1 className="text-4xl mx-auto my-12 font-semibold">
         Financial adviser
       </h1>
-      <div className="flex flex-col mx-auto">
-        <div className="flex flex-row justify-between gap-x-2">
+      <div className="flex flex-col mx-auto w-[700px]">
+        <div className="flex flex-row mx-auto justify-between gap-x-2">
           <FundingForm></FundingForm>
           <DisplayFundingSources></DisplayFundingSources>
         </div>
