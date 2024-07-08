@@ -28,7 +28,7 @@ def get_financial_advise():
         return {"error": 2}
 
     c = [float(source["interestrate"]) for source in request.json["funding"]]
-    x = [solver.NumVar(0.0, solver.infinity(), f"{request.json["funding"][i]["name"]}") for i in range(len(c))]
+    x = [solver.NumVar(0.0, solver.infinity(), f"{request.json['funding'][i]['name']}") for i in range(len(c))]
     b = [float(source["maxdebt"]) for source in request.json["funding"]]
     b.append(float(request.json["valuetopay"]))
     A = np.eye(len(c), dtype=float)

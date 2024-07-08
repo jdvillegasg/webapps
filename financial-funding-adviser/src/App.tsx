@@ -10,7 +10,7 @@ function App() {
         Financial adviser
       </h1>
       <div className="flex flex-col mx-auto">
-        <div className="flex flex-row justify-between gap-x-2">
+        <div className="flex flex-row justify-between gap-x-2 w-[50rem]">
           <FundingForm></FundingForm>
           <DisplayFundingSources></DisplayFundingSources>
         </div>

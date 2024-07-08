@@ -1,5 +1,3 @@
-import { ScrollArea } from "../components/ui/scroll-area";
-import { Separator } from "../components/ui/separator";
 import {
   Table,
   TableBody,
@@ -13,34 +11,6 @@ import { Button } from "../components/ui/button";
 import { useStore } from "../stores/store.ts";
 import { Trash } from "lucide-react";
 
-export function DisplaySources() {
-  const { fundingsource } = useStore();
-  return (
-    <div className="ml-6 w-80 px-3">
-      <ScrollArea className="h-72 rounded-md border">
-        <div className="p-4">
-          <h1 className="mb-4 text-lg font-semibold">Funding sources</h1>
-          {fundingsource.map((source, cnt) => (
-            <>
-              <div
-                key={cnt}
-                className="text-sm flex flex-row justify-between gap-x-2 px-3"
-              >
-                <span className="text-left text-base">{source.name}</span>
-                <span className="text-right text-base">{source.maxdebt}</span>
-                <span className="text-right text-base">
-                  {source.interestrate}
-                </span>
-              </div>
-              <Separator className="my-2" />
-            </>
-          ))}
-        </div>
-      </ScrollArea>
-    </div>
-  );
-}
-
 export function DisplayFundingSources() {
   const { fundingsource, deleteFund } = useStore();
 
@@ -49,7 +19,7 @@ export function DisplayFundingSources() {
   };
 
   return (
-    <div className="ml-4 rounded-md border mx-auto">
+    <div className="ml-4 rounded-md border mx-auto w-1/2">
       <Table
         className="pb-2"
         containerClassname="h-fit max-h-80 overflow-y-auto relative pt-2"
