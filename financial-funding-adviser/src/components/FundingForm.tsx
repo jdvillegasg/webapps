@@ -27,7 +27,7 @@ export function FundingForm() {
   });
 
   return (
-    <div className="flex flex-col gap-y-2 rounded-md border px-6 pb-6 w-1/2">
+    <div className="flex flex-col gap-y-2 rounded-md h-[400px] border px-6 pb-6">
       <form
         onSubmit={(e) => {
           e.preventDefault();
