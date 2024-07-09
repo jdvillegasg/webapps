@@ -1,7 +1,7 @@
 import { useForm } from "@tanstack/react-form";
-import { Input } from "../components/ui/input";
-import { Label } from "../components/ui/label";
-import { Button } from "../components/ui/button";
+import { Input } from "./ui/input.tsx";
+import { Label } from "./ui/label.tsx";
+import { Button } from "./ui/button.tsx";
 import { zodValidator } from "@tanstack/zod-form-adapter";
 import { type CustomChangeEvent, fundingSchema } from "../types.ts";
 import { useStore } from "../stores/store.ts";

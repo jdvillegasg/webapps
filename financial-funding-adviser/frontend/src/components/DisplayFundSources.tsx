@@ -6,8 +6,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../components/ui/table";
-import { Button } from "../components/ui/button";
+} from "./ui/table.tsx";
+import { Button } from "./ui/button.tsx";
 import { useStore } from "../stores/store.ts";
 import { Trash } from "lucide-react";
 

@@ -6,7 +6,7 @@ import os
 
 app = Flask(__name__)
 
-dist_folder = os.path.join(os.getcwd(), "..", "dist")
+dist_folder = os.path.join(os.getcwd(), "..", "frontend", "dist")
 
 # Serve static files
 @app.route("/", defaults={"filename": ""})

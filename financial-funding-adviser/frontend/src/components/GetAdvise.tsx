@@ -1,10 +1,10 @@
-import { Button } from "../components/ui/button";
+import { Button } from "./ui/button.tsx";
 import { useStore } from "../stores/store.ts";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useForm } from "@tanstack/react-form";
-import { Input } from "../components/ui/input";
-import { Label } from "../components/ui/label";
+import { Input } from "./ui/input.tsx";
+import { Label } from "./ui/label.tsx";
 import { zodValidator } from "@tanstack/zod-form-adapter";
 import { type PostSchema, fundingSchema } from "../types.ts";
 
