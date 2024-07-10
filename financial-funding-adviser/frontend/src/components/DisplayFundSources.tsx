@@ -19,7 +19,7 @@ export function DisplayFundingSources() {
   };
 
   return (
-    <div className="ml-4 rounded-md border mx-auto w-1/2">
+    <div className="ml-4 rounded-md border w-1/2">
       <Table
         className="pb-2"
         containerClassname="h-fit max-h-80 overflow-y-auto relative pt-2"

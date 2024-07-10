@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for financial-funding-adviser-still-sky-3950 on 2024-07-08T14:07:56-05:00
+# fly.toml app configuration file generated for financial-funding-adviser-old-dawn-8062 on 2024-07-10T11:05:10-05:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'financial-funding-adviser-still-sky-3950'
+app = 'financial-funding-adviser-old-dawn-8062'
 primary_region = 'bog'
 
 [build]

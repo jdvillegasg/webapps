@@ -27,7 +27,7 @@ export function FundingForm() {
   });
 
   return (
-    <div className="flex flex-col gap-y-2 rounded-md h-[400px] border px-6 pb-6">
+    <div className="flex flex-col gap-y-2 rounded-md h-[400px] border px-6 pb-6 w-1/2">
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -111,7 +111,7 @@ export function FundingForm() {
         <form.Subscribe
           selector={(state) => [state.canSubmit, state.isSubmitting]}
           children={([canSubmit, isSubmitting]) => (
-            <Button type="submit" disabled={!canSubmit} className="mt-4">
+            <Button type="submit" disabled={!canSubmit} className="mt-4 w-full">
               {isSubmitting ? "..." : "Create"}
             </Button>
           )}
