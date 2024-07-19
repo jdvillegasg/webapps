@@ -1,4 +1,5 @@
 import { insertExpenseSchema } from "./db/schemas/expenses";
+import { z } from "zod";
 
 /* Initial validator object with Zod
 import { z } from "zod";
@@ -18,4 +19,9 @@ export const createExpenseSchema = insertExpenseSchema.omit({
   userId: true,
   createdAt: true,
   id: true,
+});
+
+export const setIntervalDateValidator = z.object({
+  myStartDate: z.string(),
+  myStopDate: z.string(),
 });

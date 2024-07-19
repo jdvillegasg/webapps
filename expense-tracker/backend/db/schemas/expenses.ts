@@ -20,6 +20,7 @@ export const categoryValues = [
   "Rent",
   "Training",
   "Exercise",
+  "Other",
 ] as const;
 
 export const categoryEnum = pgEnum("mood", categoryValues);
