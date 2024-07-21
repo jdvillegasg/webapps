@@ -1,5 +1,7 @@
 {
   "devDependencies": {
+    "@tanstack/router-devtools": "^1.45.6",
+    "@tanstack/router-plugin": "^1.45.3",
     "autoprefixer": "^10.4.19",
     "postcss": "^8.4.38",
     "standard": "^17.1.0",
@@ -7,5 +9,8 @@
   },
   "eslintConfig": {
     "extends": "./node_modules/standard/eslintrc.json"
+  },
+  "dependencies": {
+    "@tanstack/react-router": "^1.45.6"
   }
 }
