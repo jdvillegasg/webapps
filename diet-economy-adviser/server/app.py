@@ -41,7 +41,8 @@ def create_food():
     description, 
     personalrating,
     potasium, 
-    magnesium)
+    magnesium,
+    vitaB12)
     '''
     print(f"Request json: {request.json}")
     food = (request.json['food']['title'], 
@@ -62,15 +63,27 @@ def create_food():
             float(request.json['food']['potasium']),
             float(request.json['food']['magnesium']),
             request.json['food']['city'],
+            float(request.json['food']['vitaB12']),
             )
     
     print(food)
     myNutritionTable = HandleNutritionTable()
     
     # Add the food to the database
-    myNutritionTable.insert_data(data=[food])
+    status = myNutritionTable.insert_data(data=[food])
+    if status['status_code']  == myNutritionTable.status_code['success']:
+        return {"message": "Food created successfully"}
+    else:
+        return {"message": f"Food could NOT be created: {status['data']}"}
     
-    return {"message": "Food created successfully"}
+@app.route('/api/foods', methods=['GET'])
+def get_all_foods():
+    myNutritionTable = HandleNutritionTable()
+    data = myNutritionTable.get_foods()
+    if data['status_code']  == myNutritionTable.status_code['success']:
+        return {"data": data['data']}
+    else:
+        return {"message": f"Food could NOT be retrieved: {data['data']}"}
 
 @app.route('/api/advise', methods=['POST'])
 def get_financial_advise():

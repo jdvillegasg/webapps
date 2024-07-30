@@ -20,6 +20,7 @@ import {
 } from "../sharedTypes";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/create_food")({
   component: CreateFood,
@@ -34,6 +35,13 @@ function CreateFood() {
           console.log(response.data.message);
 
           //Toast
+          if (response.data.message === "Food created successfully") {
+            toast.success("Food added successfully!");
+          } else {
+            toast("Error", { description: response.data.message });
+          }
+
+          // Reset form
           form.reset();
         })
         .catch(function (error) {
@@ -54,6 +62,7 @@ function CreateFood() {
       fiber: "0",
       vitaA: "0",
       vitaC: "0",
+      vitaB12: "0",
       folic: "0",
       calcium: "0",
       iron: "0",
@@ -162,7 +171,7 @@ function CreateFood() {
                 children={(field) => (
                   <div className="flex flex-col gap-y-2">
                     <Label htmlFor={field.name} className="text-lg">
-                      Price
+                      Price (per 100g)
                     </Label>
                     <Input
                       name={field.name}
@@ -179,7 +188,7 @@ function CreateFood() {
               />
             </div>
             <div className="flex flex-col gap-y-4 rounded border px-8 py-6">
-              <h1 className="text-2xl">Macronutrients</h1>
+              <h1 className="text-2xl">Macronutrients (unit/100g)</h1>
               <form.Field
                 name="calories"
                 validators={{
@@ -188,7 +197,7 @@ function CreateFood() {
                 children={(field) => (
                   <div className="flex flex-col gap-y-2">
                     <Label htmlFor={field.name} className="text-lg">
-                      Calories
+                      Calories (kcal)
                     </Label>
                     <Input
                       name={field.name}
@@ -211,7 +220,7 @@ function CreateFood() {
                 children={(field) => (
                   <div className="flex flex-col gap-y-2">
                     <Label htmlFor={field.name} className="text-lg">
-                      Fat
+                      Fat (g)
                     </Label>
                     <Input
                       name={field.name}
@@ -234,7 +243,7 @@ function CreateFood() {
                 children={(field) => (
                   <div className="flex flex-col gap-y-2">
                     <Label htmlFor={field.name} className="text-lg">
-                      Carbohydrates
+                      Carbohydrates (g)
                     </Label>
                     <Input
                       name={field.name}
@@ -257,7 +266,7 @@ function CreateFood() {
                 children={(field) => (
                   <div className="flex flex-col gap-y-2">
                     <Label htmlFor={field.name} className="text-lg">
-                      Protein
+                      Protein (g)
                     </Label>
                     <Input
                       name={field.name}
@@ -280,7 +289,7 @@ function CreateFood() {
                 children={(field) => (
                   <div className="flex flex-col gap-y-2">
                     <Label htmlFor={field.name} className="text-lg">
-                      Fiber
+                      Fiber (g)
                     </Label>
                     <Input
                       name={field.name}
@@ -296,195 +305,235 @@ function CreateFood() {
                 )}
               />
             </div>
-            <div className="flex flex-col gap-y-4 rounded border px-8 py-6">
-              <h1 className="text-2xl">Micronutrients</h1>
-              <form.Field
-                name="iron"
-                validators={{
-                  onChange: createFoodValidator.shape.iron,
-                }}
-                children={(field) => (
-                  <div className="flex flex-col gap-y-2">
-                    <Label htmlFor={field.name} className="text-lg">
-                      Iron
-                    </Label>
-                    <Input
-                      name={field.name}
-                      value={field.state.value}
-                      onBlur={field.handleBlur}
-                      type="number"
-                      onChange={(e) => field.handleChange(e.target.value)}
-                    />
-                    {field.state.meta.errors ? (
-                      <em role="alert">{field.state.meta.errors.join(", ")}</em>
-                    ) : null}
-                  </div>
-                )}
-              />
-              <form.Field
-                name="folic"
-                validators={{
-                  onChange: createFoodValidator.shape.folic,
-                }}
-                children={(field) => (
-                  <div className="flex flex-col gap-y-2">
-                    <Label htmlFor={field.name} className="text-lg">
-                      Folic Acid
-                    </Label>
-                    <Input
-                      name={field.name}
-                      value={field.state.value}
-                      onBlur={field.handleBlur}
-                      type="number"
-                      onChange={(e) => field.handleChange(e.target.value)}
-                    />
-                    {field.state.meta.errors ? (
-                      <em role="alert">{field.state.meta.errors.join(", ")}</em>
-                    ) : null}
-                  </div>
-                )}
-              />
-              <form.Field
-                name="calcium"
-                validators={{
-                  onChange: createFoodValidator.shape.calcium,
-                }}
-                children={(field) => (
-                  <div className="flex flex-col gap-y-2">
-                    <Label htmlFor={field.name} className="text-lg">
-                      Calcium
-                    </Label>
-                    <Input
-                      name={field.name}
-                      value={field.state.value}
-                      onBlur={field.handleBlur}
-                      type="number"
-                      onChange={(e) => field.handleChange(e.target.value)}
-                    />
-                    {field.state.meta.errors ? (
-                      <em role="alert">{field.state.meta.errors.join(", ")}</em>
-                    ) : null}
-                  </div>
-                )}
-              />
-              <form.Field
-                name="potasium"
-                validators={{
-                  onChange: createFoodValidator.shape.potasium,
-                }}
-                children={(field) => (
-                  <div className="flex flex-col gap-y-2">
-                    <Label htmlFor={field.name} className="text-lg">
-                      Potasium
-                    </Label>
-                    <Input
-                      name={field.name}
-                      value={field.state.value}
-                      onBlur={field.handleBlur}
-                      type="number"
-                      onChange={(e) => field.handleChange(e.target.value)}
-                    />
-                    {field.state.meta.errors ? (
-                      <em role="alert">{field.state.meta.errors.join(", ")}</em>
-                    ) : null}
-                  </div>
-                )}
-              />
-              <form.Field
-                name="magnesium"
-                validators={{
-                  onChange: createFoodValidator.shape.magnesium,
-                }}
-                children={(field) => (
-                  <div className="flex flex-col gap-y-2">
-                    <Label htmlFor={field.name} className="text-lg">
-                      Magnesium
-                    </Label>
-                    <Input
-                      name={field.name}
-                      value={field.state.value}
-                      onBlur={field.handleBlur}
-                      type="number"
-                      onChange={(e) => field.handleChange(e.target.value)}
-                    />
-                    {field.state.meta.errors ? (
-                      <em role="alert">{field.state.meta.errors.join(", ")}</em>
-                    ) : null}
-                  </div>
-                )}
-              />
-              <form.Field
-                name="vitaA"
-                validators={{
-                  onChange: createFoodValidator.shape.vitaA,
-                }}
-                children={(field) => (
-                  <div className="flex flex-col gap-y-2">
-                    <Label htmlFor={field.name} className="text-lg">
-                      Vitamin A
-                    </Label>
-                    <Input
-                      name={field.name}
-                      value={field.state.value}
-                      onBlur={field.handleBlur}
-                      type="number"
-                      onChange={(e) => field.handleChange(e.target.value)}
-                    />
-                    {field.state.meta.errors ? (
-                      <em role="alert">{field.state.meta.errors.join(", ")}</em>
-                    ) : null}
-                  </div>
-                )}
-              />
-              <form.Field
-                name="vitaC"
-                validators={{
-                  onChange: createFoodValidator.shape.vitaC,
-                }}
-                children={(field) => (
-                  <div className="flex flex-col gap-y-2">
-                    <Label htmlFor={field.name} className="text-lg">
-                      Vitamin C
-                    </Label>
-                    <Input
-                      name={field.name}
-                      value={field.state.value}
-                      onBlur={field.handleBlur}
-                      type="number"
-                      onChange={(e) => field.handleChange(e.target.value)}
-                    />
-                    {field.state.meta.errors ? (
-                      <em role="alert">{field.state.meta.errors.join(", ")}</em>
-                    ) : null}
-                  </div>
-                )}
-              />
-            </div>
-            <div className="flex flex-col gap-y-4 rounded border px-8 py-6">
-              <h1 className="text-2xl">Toxic</h1>
-              <form.Field
-                name="sodium"
-                validators={{
-                  onChange: createFoodValidator.shape.sodium,
-                }}
-                children={(field) => (
-                  <div className="flex flex-col gap-y-2">
-                    <Label htmlFor={field.name} className="text-lg">
-                      Sodium
-                    </Label>
-                    <Input
-                      name={field.name}
-                      value={field.state.value}
-                      onBlur={field.handleBlur}
-                      type="number"
-                      onChange={(e) => field.handleChange(e.target.value)}
-                    />
-                    {field.state.meta.errors ? (
-                      <em role="alert">{field.state.meta.errors.join(", ")}</em>
-                    ) : null}
-                  </div>
-                )}
-              />
+            <div className="flex flex-col col-span-2 gap-y-4 rounded border px-8 py-6">
+              <h1 className="text-2xl">Micronutrients (unit/100g)</h1>
+              <div className="grid grid-cols-4 gap-x-4 gap-y-3">
+                <form.Field
+                  name="iron"
+                  validators={{
+                    onChange: createFoodValidator.shape.iron,
+                  }}
+                  children={(field) => (
+                    <div className="flex flex-col gap-y-2">
+                      <Label htmlFor={field.name} className="text-lg">
+                        Iron (mg)
+                      </Label>
+                      <Input
+                        name={field.name}
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        type="number"
+                        onChange={(e) => field.handleChange(e.target.value)}
+                      />
+                      {field.state.meta.errors ? (
+                        <em role="alert">
+                          {field.state.meta.errors.join(", ")}
+                        </em>
+                      ) : null}
+                    </div>
+                  )}
+                />
+                <form.Field
+                  name="folic"
+                  validators={{
+                    onChange: createFoodValidator.shape.folic,
+                  }}
+                  children={(field) => (
+                    <div className="flex flex-col gap-y-2">
+                      <Label htmlFor={field.name} className="text-lg">
+                        Folic Acid (ug)
+                      </Label>
+                      <Input
+                        name={field.name}
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        type="number"
+                        onChange={(e) => field.handleChange(e.target.value)}
+                      />
+                      {field.state.meta.errors ? (
+                        <em role="alert">
+                          {field.state.meta.errors.join(", ")}
+                        </em>
+                      ) : null}
+                    </div>
+                  )}
+                />
+                <form.Field
+                  name="calcium"
+                  validators={{
+                    onChange: createFoodValidator.shape.calcium,
+                  }}
+                  children={(field) => (
+                    <div className="flex flex-col gap-y-2">
+                      <Label htmlFor={field.name} className="text-lg">
+                        Calcium (mg)
+                      </Label>
+                      <Input
+                        name={field.name}
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        type="number"
+                        onChange={(e) => field.handleChange(e.target.value)}
+                      />
+                      {field.state.meta.errors ? (
+                        <em role="alert">
+                          {field.state.meta.errors.join(", ")}
+                        </em>
+                      ) : null}
+                    </div>
+                  )}
+                />
+                <form.Field
+                  name="potasium"
+                  validators={{
+                    onChange: createFoodValidator.shape.potasium,
+                  }}
+                  children={(field) => (
+                    <div className="flex flex-col gap-y-2">
+                      <Label htmlFor={field.name} className="text-lg">
+                        Potasium (g)
+                      </Label>
+                      <Input
+                        name={field.name}
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        type="number"
+                        onChange={(e) => field.handleChange(e.target.value)}
+                      />
+                      {field.state.meta.errors ? (
+                        <em role="alert">
+                          {field.state.meta.errors.join(", ")}
+                        </em>
+                      ) : null}
+                    </div>
+                  )}
+                />
+                <form.Field
+                  name="magnesium"
+                  validators={{
+                    onChange: createFoodValidator.shape.magnesium,
+                  }}
+                  children={(field) => (
+                    <div className="flex flex-col gap-y-2">
+                      <Label htmlFor={field.name} className="text-lg">
+                        Magnesium (mg)
+                      </Label>
+                      <Input
+                        name={field.name}
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        type="number"
+                        onChange={(e) => field.handleChange(e.target.value)}
+                      />
+                      {field.state.meta.errors ? (
+                        <em role="alert">
+                          {field.state.meta.errors.join(", ")}
+                        </em>
+                      ) : null}
+                    </div>
+                  )}
+                />
+                <form.Field
+                  name="vitaA"
+                  validators={{
+                    onChange: createFoodValidator.shape.vitaA,
+                  }}
+                  children={(field) => (
+                    <div className="flex flex-col gap-y-2">
+                      <Label htmlFor={field.name} className="text-lg">
+                        Vitamin A (ug)
+                      </Label>
+                      <Input
+                        name={field.name}
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        type="number"
+                        onChange={(e) => field.handleChange(e.target.value)}
+                      />
+                      {field.state.meta.errors ? (
+                        <em role="alert">
+                          {field.state.meta.errors.join(", ")}
+                        </em>
+                      ) : null}
+                    </div>
+                  )}
+                />
+                <form.Field
+                  name="vitaC"
+                  validators={{
+                    onChange: createFoodValidator.shape.vitaC,
+                  }}
+                  children={(field) => (
+                    <div className="flex flex-col gap-y-2">
+                      <Label htmlFor={field.name} className="text-lg">
+                        Vitamin C (mg)
+                      </Label>
+                      <Input
+                        name={field.name}
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        type="number"
+                        onChange={(e) => field.handleChange(e.target.value)}
+                      />
+                      {field.state.meta.errors ? (
+                        <em role="alert">
+                          {field.state.meta.errors.join(", ")}
+                        </em>
+                      ) : null}
+                    </div>
+                  )}
+                />
+                <form.Field
+                  name="vitaB12"
+                  validators={{
+                    onChange: createFoodValidator.shape.vitaC,
+                  }}
+                  children={(field) => (
+                    <div className="flex flex-col gap-y-2">
+                      <Label htmlFor={field.name} className="text-lg">
+                        Vitamin B12 (ug)
+                      </Label>
+                      <Input
+                        name={field.name}
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        type="number"
+                        onChange={(e) => field.handleChange(e.target.value)}
+                      />
+                      {field.state.meta.errors ? (
+                        <em role="alert">
+                          {field.state.meta.errors.join(", ")}
+                        </em>
+                      ) : null}
+                    </div>
+                  )}
+                />
+                <form.Field
+                  name="sodium"
+                  validators={{
+                    onChange: createFoodValidator.shape.sodium,
+                  }}
+                  children={(field) => (
+                    <div className="flex flex-col gap-y-2">
+                      <Label htmlFor={field.name} className="text-lg">
+                        Sodium (mg)
+                      </Label>
+                      <Input
+                        name={field.name}
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        type="number"
+                        onChange={(e) => field.handleChange(e.target.value)}
+                      />
+                      {field.state.meta.errors ? (
+                        <em role="alert">
+                          {field.state.meta.errors.join(", ")}
+                        </em>
+                      ) : null}
+                    </div>
+                  )}
+                />
+              </div>
             </div>
           </div>
           <form.Field

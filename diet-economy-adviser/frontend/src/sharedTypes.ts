@@ -52,6 +52,9 @@ export const createFoodValidator = z.object({
   vitaC: z
     .string()
     .regex(/^\d+(\.\d{1,2})?$/, { message: "Positive numbers only" }), // Positive numbers,
+  vitaB12: z
+    .string()
+    .regex(/^\d+(\.\d{1,2})?$/, { message: "Positive numbers only" }), // Positive numbers,
   folic: z
     .string()
     .regex(/^\d+(\.\d{1,2})?$/, { message: "Positive numbers only" }), // Positive numbers,
@@ -66,7 +69,8 @@ export const createFoodValidator = z.object({
     .regex(/^\d+(\.\d{1,2})?$/, { message: "Positive numbers only" }), // Positive numbers,
   description: z
     .string()
-    .min(3, { message: "Description must have at least 3 characters" }),
+    .min(3, { message: "Description must have at least 3 characters" })
+    .max(100, { message: "Description has more than 100 characters" }),
   personalrating: z.string().refine(
     (value) => {
       const num = parseFloat(value);
@@ -86,3 +90,6 @@ export const createFoodValidator = z.object({
 });
 
 export type Food = z.infer<typeof createFoodValidator>;
+export interface FoodPlusId extends Food {
+  id: string;
+}

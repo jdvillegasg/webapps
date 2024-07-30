@@ -11,10 +11,11 @@ class HandleNutritionTable(object):
         # Get the connection string from the environment variable
         DATABASE_URL = os.getenv('DATABASE_URL')
         self.DATABASE_URL = DATABASE_URL
+        self.status_code = {'success': 1, 'error': -1, 'data': None}
 
         self.common_queries = {'insert_data': """
-INSERT INTO nutrition_table (title, carbs, fat, protein, calories, sodium, fiber, vitaA, vitaC, folic, calcium, iron, price, description, personalrating, potasium, magnesium, city)
-VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
+INSERT INTO nutrition_table (title, carbs, fat, protein, calories, sodium, fiber, vitaA, vitaC, folic, calcium, iron, price, description, personalrating, potasium, magnesium, city, vitaB12)
+VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
 """, 'drop_table':"DROP TABLE IF EXISTS nutrition_table;", 'create_table': """
 CREATE TABLE nutrition_table (
     id SERIAL PRIMARY KEY,
@@ -27,6 +28,7 @@ CREATE TABLE nutrition_table (
     fiber NUMERIC(12, 2) NOT NULL,
     vitaA NUMERIC(12, 2) NOT NULL,
     vitaC NUMERIC(12, 2) NOT NULL,
+    vitaB12 NUMERIC(12, 2) NOT NULL,
     folic NUMERIC(12, 2) NOT NULL,
     calcium NUMERIC(12, 2) NOT NULL,
     iron NUMERIC(12, 2) NOT NULL,
@@ -91,15 +93,19 @@ END $$;
             conn.commit()
             
             print("Data inserted successfully")
+            msg = {'status_code': self.status_code['success'], 'data': None}
             
         except Exception as error:
             print(f"Error: {error}")
+            msg = {'status_code': self.status_code['error'], 'data': error}
         finally:
             # Close the cursor and connection
             if cursor:
                 cursor.close()
             if conn:
                 conn.close()
+
+            return msg
 
     def drop_table(self):
         try:
@@ -206,3 +212,29 @@ END $$;
                 cursor.close()
             if conn:
                 conn.close()
+    
+    def get_foods(self):
+        try:
+            conn = psycopg2.connect(self.DATABASE_URL)
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM nutrition_table")
+            rows = cursor.fetchall()
+
+            # Get column names
+            colnames = [desc[0] for desc in cursor.description]
+
+            # Convert to list of dictionaries
+            foods = [dict(zip(colnames, row)) for row in rows]
+
+            msg = {'status_code': self.status_code['success'], 'data': foods}
+          
+        except Exception as error:
+            print(f"Error:{error}")
+            msg = {'status_code': self.status_code['error'], 'data': error}
+        finally:
+            # Close the cursor and connection
+            if cursor:
+                cursor.close()
+            if conn:
+                conn.close()
+            return msg
