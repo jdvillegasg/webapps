@@ -14,8 +14,8 @@ class HandleNutritionTable(object):
         self.status_code = {'success': 1, 'error': -1, 'data': None}
 
         self.common_queries = {'insert_data': """
-INSERT INTO nutrition_table (title, carbs, fat, protein, calories, sodium, fiber, vitaA, vitaC, folic, calcium, iron, price, description, personalrating, potasium, magnesium, city, vitaB12)
-VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
+INSERT INTO nutrition_table (title, carbs, fat, protein, calories, sodium, fiber, vitaA, vitaC, folic, calcium, iron, price, description, personalrating, potasium, magnesium, city, vitaB12, maxquantity)
+VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
 """, 'drop_table':"DROP TABLE IF EXISTS nutrition_table;", 'create_table': """
 CREATE TABLE nutrition_table (
     id SERIAL PRIMARY KEY,
@@ -233,6 +233,49 @@ END $$;
             msg = {'status_code': self.status_code['error'], 'data': error}
         finally:
             # Close the cursor and connection
+            if cursor:
+                cursor.close()
+            if conn:
+                conn.close()
+            return msg
+
+    def update_column_value(self, row_id, column_name, new_value):
+        try:
+            conn = psycopg2.connect(self.DATABASE_URL)
+            cursor = conn.cursor()
+            query = sql.SQL("UPDATE nutrition_table SET {field} = %s WHERE id = %s").format(
+                field=sql.Identifier(column_name)
+            )
+            cursor.execute(query, (new_value, row_id))
+            conn.commit()
+            print(f"Updated row with id {row_id} set {column_name} = {new_value}")
+            msg = {'status_code': self.status_code['success'], 'data': "updated successfully"}
+        except Exception as error:
+            print(f"Error: {error}")
+            msg = {'status_code': self.status_code['error'], 'data': error}
+        finally:
+            if cursor:
+                cursor.close()
+            if conn:
+                conn.close()
+            return msg
+    
+    def get_food_by_id(self, row_id):
+        try: 
+            conn = psycopg2.connect(self.DATABASE_URL)
+            cursor = conn.cursor()
+            query = sql.SQL("SELECT * FROM nutrition_table WHERE id = %s")
+            cursor.execute(query, (row_id,))
+            row = cursor.fetchone()
+            if row:
+                column_names = [desc[0] for desc in cursor.description]
+                msg = {'status_code': self.status_code['success'], 'data': dict(zip(column_names, row))}
+            else:
+                msg = {'status_code': self.status_code['error'], 'data': "No food found with given id"}
+        except Exception as error:
+            print(f"Error: {error}")
+            msg = {'status_code': self.status_code['error'], 'data': error}
+        finally:
             if cursor:
                 cursor.close()
             if conn:

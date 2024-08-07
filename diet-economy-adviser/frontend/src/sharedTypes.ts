@@ -22,6 +22,16 @@ export const cityValues = [
   "Sincelejo",
 ] as const;
 
+export const nutritionRequirementsProfilesOpts = [
+  "gainWeight",
+  "loseWeight",
+  "custom",
+] as const;
+export const nutritionProfilesZodType = z.enum(
+  nutritionRequirementsProfilesOpts
+);
+export type NutritionProfiles = z.infer<typeof nutritionProfilesZodType>;
+
 export const cityZodType = z.enum(cityValues);
 export type City = z.infer<typeof cityZodType>;
 export const createFoodValidator = z.object({
@@ -87,9 +97,39 @@ export const createFoodValidator = z.object({
     .string()
     .regex(/^\d+(\.\d{1,2})?$/, { message: "Positive numbers only" }), // Positive numbers,
   city: cityZodType,
+  maxquantity: z
+    .string()
+    .regex(/^\d+(\.\d{1,2})?$/, { message: "Positive numbers only" }), // Positive numbers,
+});
+
+export const nutritionReqValidator = createFoodValidator
+  .omit({
+    city: true,
+    price: true,
+    personalrating: true,
+    title: true,
+    description: true,
+    vitaA: true,
+    vitaC: true,
+    vitaB12: true,
+    maxquantity: true,
+  })
+  .extend({
+    profile: nutritionProfilesZodType,
+    vitaa: createFoodValidator.shape.vitaA,
+    vitac: createFoodValidator.shape.vitaC,
+    vitab12: createFoodValidator.shape.vitaB12,
+  });
+
+export const foodTable = createFoodValidator.omit({
+  city: true,
+  description: true,
+  personalrating: true,
+  price: true,
 });
 
 export type Food = z.infer<typeof createFoodValidator>;
+export type JustFood = z.infer<typeof nutritionReqValidator>;
 export interface FoodPlusId extends Food {
   id: string;
 }

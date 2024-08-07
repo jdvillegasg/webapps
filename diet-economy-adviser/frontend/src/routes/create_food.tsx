@@ -72,9 +72,11 @@ function CreateFood() {
       potasium: "0",
       magnesium: "0",
       city: cityZodType.Enum.Cali as City,
+      maxquantity: "0",
     },
     onSubmit: async ({ value }) => {
       // Do something with form data
+      console.log(value);
       mutation.mutate(value);
     },
   });
@@ -99,7 +101,7 @@ function CreateFood() {
                 }}
                 children={(field) => (
                   <div className="flex flex-col gap-y-2">
-                    <Label htmlFor={field.name} className="text-lg">
+                    <Label htmlFor={field.name} className="text-base">
                       Title
                     </Label>
                     <Input
@@ -121,7 +123,7 @@ function CreateFood() {
                 }}
                 children={(field) => (
                   <div className="flex flex-col gap-y-2">
-                    <Label htmlFor={field.name} className="text-lg">
+                    <Label htmlFor={field.name} className="text-base">
                       Description
                     </Label>
                     <Input
@@ -143,7 +145,7 @@ function CreateFood() {
                 }}
                 children={(field) => (
                   <div className="flex flex-col gap-y-2">
-                    <Label htmlFor={field.name} className="text-lg">
+                    <Label htmlFor={field.name} className="text-base">
                       City
                     </Label>
                     <Select onValueChange={(e) => field.setValue(e as City)}>
@@ -170,8 +172,31 @@ function CreateFood() {
                 }}
                 children={(field) => (
                   <div className="flex flex-col gap-y-2">
-                    <Label htmlFor={field.name} className="text-lg">
+                    <Label htmlFor={field.name} className="text-base">
                       Price (per 100g)
+                    </Label>
+                    <Input
+                      name={field.name}
+                      value={field.state.value}
+                      onBlur={field.handleBlur}
+                      type="number"
+                      onChange={(e) => field.handleChange(e.target.value)}
+                    />
+                    {field.state.meta.errors ? (
+                      <em role="alert">{field.state.meta.errors.join(", ")}</em>
+                    ) : null}
+                  </div>
+                )}
+              />
+              <form.Field
+                name="maxquantity"
+                validators={{
+                  onChange: createFoodValidator.shape.maxquantity,
+                }}
+                children={(field) => (
+                  <div className="flex flex-col gap-y-2">
+                    <Label htmlFor={field.name} className="text-base">
+                      Max quantity (units of 100g)
                     </Label>
                     <Input
                       name={field.name}
@@ -196,7 +221,7 @@ function CreateFood() {
                 }}
                 children={(field) => (
                   <div className="flex flex-col gap-y-2">
-                    <Label htmlFor={field.name} className="text-lg">
+                    <Label htmlFor={field.name} className="text-base">
                       Calories (kcal)
                     </Label>
                     <Input
@@ -219,7 +244,7 @@ function CreateFood() {
                 }}
                 children={(field) => (
                   <div className="flex flex-col gap-y-2">
-                    <Label htmlFor={field.name} className="text-lg">
+                    <Label htmlFor={field.name} className="text-base">
                       Fat (g)
                     </Label>
                     <Input
@@ -242,7 +267,7 @@ function CreateFood() {
                 }}
                 children={(field) => (
                   <div className="flex flex-col gap-y-2">
-                    <Label htmlFor={field.name} className="text-lg">
+                    <Label htmlFor={field.name} className="text-base">
                       Carbohydrates (g)
                     </Label>
                     <Input
@@ -265,7 +290,7 @@ function CreateFood() {
                 }}
                 children={(field) => (
                   <div className="flex flex-col gap-y-2">
-                    <Label htmlFor={field.name} className="text-lg">
+                    <Label htmlFor={field.name} className="text-base">
                       Protein (g)
                     </Label>
                     <Input
@@ -288,7 +313,7 @@ function CreateFood() {
                 }}
                 children={(field) => (
                   <div className="flex flex-col gap-y-2">
-                    <Label htmlFor={field.name} className="text-lg">
+                    <Label htmlFor={field.name} className="text-base">
                       Fiber (g)
                     </Label>
                     <Input
@@ -315,7 +340,7 @@ function CreateFood() {
                   }}
                   children={(field) => (
                     <div className="flex flex-col gap-y-2">
-                      <Label htmlFor={field.name} className="text-lg">
+                      <Label htmlFor={field.name} className="text-base">
                         Iron (mg)
                       </Label>
                       <Input
@@ -340,7 +365,7 @@ function CreateFood() {
                   }}
                   children={(field) => (
                     <div className="flex flex-col gap-y-2">
-                      <Label htmlFor={field.name} className="text-lg">
+                      <Label htmlFor={field.name} className="text-base">
                         Folic Acid (ug)
                       </Label>
                       <Input
@@ -365,7 +390,7 @@ function CreateFood() {
                   }}
                   children={(field) => (
                     <div className="flex flex-col gap-y-2">
-                      <Label htmlFor={field.name} className="text-lg">
+                      <Label htmlFor={field.name} className="text-base">
                         Calcium (mg)
                       </Label>
                       <Input
@@ -390,7 +415,7 @@ function CreateFood() {
                   }}
                   children={(field) => (
                     <div className="flex flex-col gap-y-2">
-                      <Label htmlFor={field.name} className="text-lg">
+                      <Label htmlFor={field.name} className="text-base">
                         Potasium (g)
                       </Label>
                       <Input
@@ -415,7 +440,7 @@ function CreateFood() {
                   }}
                   children={(field) => (
                     <div className="flex flex-col gap-y-2">
-                      <Label htmlFor={field.name} className="text-lg">
+                      <Label htmlFor={field.name} className="text-base">
                         Magnesium (mg)
                       </Label>
                       <Input
@@ -440,7 +465,7 @@ function CreateFood() {
                   }}
                   children={(field) => (
                     <div className="flex flex-col gap-y-2">
-                      <Label htmlFor={field.name} className="text-lg">
+                      <Label htmlFor={field.name} className="text-base">
                         Vitamin A (ug)
                       </Label>
                       <Input
@@ -465,7 +490,7 @@ function CreateFood() {
                   }}
                   children={(field) => (
                     <div className="flex flex-col gap-y-2">
-                      <Label htmlFor={field.name} className="text-lg">
+                      <Label htmlFor={field.name} className="text-base">
                         Vitamin C (mg)
                       </Label>
                       <Input
@@ -490,7 +515,7 @@ function CreateFood() {
                   }}
                   children={(field) => (
                     <div className="flex flex-col gap-y-2">
-                      <Label htmlFor={field.name} className="text-lg">
+                      <Label htmlFor={field.name} className="text-base">
                         Vitamin B12 (ug)
                       </Label>
                       <Input
@@ -515,7 +540,7 @@ function CreateFood() {
                   }}
                   children={(field) => (
                     <div className="flex flex-col gap-y-2">
-                      <Label htmlFor={field.name} className="text-lg">
+                      <Label htmlFor={field.name} className="text-base">
                         Sodium (mg)
                       </Label>
                       <Input
@@ -543,7 +568,7 @@ function CreateFood() {
             }}
             children={(field) => (
               <div className="flex flex-col gap-y-2 w-full">
-                <Label htmlFor={field.name} className="text-lg">
+                <Label htmlFor={field.name} className="text-base">
                   Personal rating
                 </Label>
                 <Input
