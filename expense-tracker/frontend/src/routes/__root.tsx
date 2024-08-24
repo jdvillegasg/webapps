@@ -1,4 +1,5 @@
 import { type QueryClient } from "@tanstack/react-query";
+import { userQueryOpts } from "@/lib/api";
 import {
   createRootRouteWithContext,
   Link,
@@ -12,10 +13,21 @@ interface MyRouterContext {
 }
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
+  beforeLoad: async ({ context }) => {
+    const queryClient = context.queryClient;
+
+    try {
+      const data = await queryClient.fetchQuery(userQueryOpts);
+      return data;
+    } catch (error) {
+      return { user: null };
+    }
+  },
   component: Root,
 });
 
 function NavigationBar() {
+  const { user } = Route.useRouteContext();
   return (
     <div className="flex p-2 max-w-3xl m-auto justify-between">
       <Link to="/" className="[&.active]:font-bold">
@@ -28,6 +40,13 @@ function NavigationBar() {
         <Link to="/create-expense" className="[&.active]:font-bold">
           Create
         </Link>
+        {user ? (
+          <a className="" href="/api/logout">
+            Logout
+          </a>
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );

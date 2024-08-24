@@ -39,12 +39,14 @@ function Index() {
   return (
     <>
       <div className="p-2 flex flex-col">
-        <h1 className="text-center text-4xl mx-auto mt-6">
-          Welcome {data.user.family_name}
+        <h1 className="text-4xl mt-6">
+          Welcome {data.user.given_name} {data.user.family_name}
         </h1>
-        <a href="/api/logout">Logout</a>
+        <span className="text-2xl mt-2">
+          Below you will find a summary of your expenses
+        </span>
       </div>
-      <h1 className="text-center text-4xl mx-auto mt-6">Dashboard</h1>
+      {/*<h1 className="text-center text-4xl mx-auto mt-6">Dashboard</h1>*/}
       <div className="flex flex-row justify-between gap-x-6 mt-10">
         <div className="w-1/2">
           <CardAnyInterval></CardAnyInterval>

@@ -18,9 +18,14 @@ export const Route = createFileRoute("/_authenticated")({
 
 function Login() {
   return (
-    <div className="p-2 flex flex-col">
-      <h1>You have to login</h1>
-      <a href="/api/login">Login</a>
+    <div className="p-2 flex flex-col gap-y-4">
+      <h1 className="text-3xl mt-12 mx-auto">Login to check your expenses</h1>
+      <a
+        className="text-2xl font-bold mx-auto border rounded py-2 px-3"
+        href="/api/login"
+      >
+        Login
+      </a>
     </div>
   );
 }
