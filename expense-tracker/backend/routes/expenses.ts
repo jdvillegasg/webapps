@@ -60,9 +60,19 @@ export const expensesRoute = new Hono()
   .get("/last-week-spent", getUserMiddlewareMethod, async (c) => {
     // Sum of the expenses of the last week
     // FROM THE DAY THE USER MAKES THE CONSULT
+
     const result = await db
-      .execute<LastWeekExpense>(
-        sql`select sum(${expensesTable.amount}) as lastweekspent from ${expensesTable} where ${expensesTable.date} >= CURRENT_DATE - INTERVAL '7 days'`
+      .select({
+        lastbiweekspent: sql<number>`sum(${expensesTable.amount})`.as(
+          "lastweekspent"
+        ),
+      })
+      .from(expensesTable)
+      .where(
+        and(
+          eq(expensesTable.userId, c.var.user.id),
+          sql`${expensesTable.date} >= CURRENT_DATE - INTERVAL '7 days'`
+        )
       )
       .then((res) => res[0]);
 
@@ -71,9 +81,19 @@ export const expensesRoute = new Hono()
   .get("/last-biweek-spent", getUserMiddlewareMethod, async (c) => {
     // Sum of the expenses of the last 2 weeks
     // FROM THE DAY THE USER MAKES THE CONSULT
+
     const result = await db
-      .execute<LastBiWeekExpense>(
-        sql`select sum(${expensesTable.amount}) as lastbiweekspent from ${expensesTable} where ${expensesTable.date} >= CURRENT_DATE - INTERVAL '15 days'`
+      .select({
+        lastbiweekspent: sql<number>`sum(${expensesTable.amount})`.as(
+          "lastbiweekspent"
+        ),
+      })
+      .from(expensesTable)
+      .where(
+        and(
+          eq(expensesTable.userId, c.var.user.id),
+          sql`${expensesTable.date} >= CURRENT_DATE - INTERVAL '15 days'`
+        )
       )
       .then((res) => res[0]);
 
@@ -83,8 +103,17 @@ export const expensesRoute = new Hono()
     // Sum of the expenses of the last month
     // FROM THE DAY THE USER MAKES THE CONSULT
     const result = await db
-      .execute<LastMonthExpense>(
-        sql`select sum(${expensesTable.amount}) as lastmonthspent from ${expensesTable} where ${expensesTable.date} >= CURRENT_DATE - INTERVAL '30 days'`
+      .select({
+        lastbiweekspent: sql<number>`sum(${expensesTable.amount})`.as(
+          "lastmonthspent"
+        ),
+      })
+      .from(expensesTable)
+      .where(
+        and(
+          eq(expensesTable.userId, c.var.user.id),
+          sql`${expensesTable.date} >= CURRENT_DATE - INTERVAL '30 days'`
+        )
       )
       .then((res) => res[0]);
 
@@ -102,7 +131,12 @@ export const expensesRoute = new Hono()
       const result = await db
         .select({ spentInInterval: sum(expensesTable.amount) })
         .from(expensesTable)
-        .where(between(expensesTable.date, myStartDate, myStopDate)) // you can compare dates right away!! I didn't find documentation about it, but I just tried it and it works
+        .where(
+          and(
+            eq(expensesTable.userId, c.var.user.id),
+            between(expensesTable.date, myStartDate, myStopDate)
+          )
+        ) // you can compare dates right away!! I didn't find documentation about it, but I just tried it and it works
         .then((res) => res[0]);
 
       return c.json(result);
@@ -125,7 +159,12 @@ export const expensesRoute = new Hono()
       const result = await db
         .select({ amount: expensesTable.amount, date: expensesTable.date })
         .from(expensesTable)
-        .where(between(expensesTable.date, pastDate, today))
+        .where(
+          and(
+            eq(expensesTable.userId, c.var.user.id),
+            between(expensesTable.date, pastDate, today)
+          )
+        )
         .then((res) => {
           res.sort((a, b) => Date.parse(b.date) - Date.parse(a.date));
 
