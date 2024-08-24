@@ -63,7 +63,7 @@ export const expensesRoute = new Hono()
 
     const result = await db
       .select({
-        lastbiweekspent: sql<number>`sum(${expensesTable.amount})`.as(
+        lastweekspent: sql<number>`sum(${expensesTable.amount})`.as(
           "lastweekspent"
         ),
       })
@@ -104,7 +104,7 @@ export const expensesRoute = new Hono()
     // FROM THE DAY THE USER MAKES THE CONSULT
     const result = await db
       .select({
-        lastbiweekspent: sql<number>`sum(${expensesTable.amount})`.as(
+        lastmonthspent: sql<number>`sum(${expensesTable.amount})`.as(
           "lastmonthspent"
         ),
       })
